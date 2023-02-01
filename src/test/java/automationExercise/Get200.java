@@ -34,13 +34,14 @@ Response JSON: All products list
         specExercise.pathParam("pp1","productsList");
         Response response=given()
                 .spec(specExercise)
-                .contentType(ContentType.HTML)
+                .contentType(ContentType.JSON)
                 .when()
                 .get("/{pp1}");
-       // response.prettyPrint();
+        response.prettyPrint();
         XmlPath doc=response.xmlPath(XmlPath.CompatibilityMode.HTML);
-        int size=doc.getList("html.body.id").size();
-        System.out.println(response.htmlPath().getList("html.body").get(0));
+       int size=response.jsonPath().getList("products.id").size();
+        System.out.println(size);
+       // System.out.println(response.htmlPath().getList("html.body").get(0));
         //int size= response.htmlPath().getList("products",)
        // int size=response.jsonPath().getList("id").size();
        // System.out.println(doc.getString("html.body.responseCode"));
