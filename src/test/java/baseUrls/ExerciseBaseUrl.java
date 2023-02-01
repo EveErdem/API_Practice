@@ -11,7 +11,7 @@ public class ExerciseBaseUrl {
     protected RequestSpecification specExercise;
     @Before
     public void setUp(){
-        specExercise= new RequestSpecBuilder().setBaseUri("https://automationexercise.com").build();
+        specExercise= new RequestSpecBuilder().setBaseUri("https://automationexercise.com/api/").build();
 
     }
 }

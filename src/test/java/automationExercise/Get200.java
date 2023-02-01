@@ -31,12 +31,12 @@ Response JSON: All products list
                 statusCode(200).
                 body("bookingid", Matchers.hasSize(size));
          */
-        specExercise.pathParams("pp1","api","pp2","productsList");
+        specExercise.pathParam("pp1","productsList");
         Response response=given()
                 .spec(specExercise)
                 .contentType(ContentType.HTML)
                 .when()
-                .get("/{pp1}/{pp2}");
+                .get("/{pp1}");
        // response.prettyPrint();
         XmlPath doc=response.xmlPath(XmlPath.CompatibilityMode.HTML);
         int size=doc.getList("html.body.id").size();
