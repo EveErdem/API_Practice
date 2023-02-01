@@ -1,9 +1,14 @@
 package automationExercise;
 
 import baseUrls.ExerciseBaseUrl;
+import io.restassured.http.ContentType;
+import io.restassured.path.xml.XmlPath;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
 
@@ -29,14 +34,20 @@ Response JSON: All products list
         specExercise.pathParams("pp1","api","pp2","productsList");
         Response response=given()
                 .spec(specExercise)
+                .contentType(ContentType.HTML)
                 .when()
                 .get("/{pp1}/{pp2}");
-        response.prettyPrint();
-       // int size=response.jsonPath().getJsonObject("products.id").size()
-        System.out.println(size);
+       // response.prettyPrint();
+        XmlPath doc=response.xmlPath(XmlPath.CompatibilityMode.HTML);
+        int size=doc.getList("html.body.id").size();
+        System.out.println(response.htmlPath().getList("html.body").get(0));
+        //int size= response.htmlPath().getList("products",)
+       // int size=response.jsonPath().getList("id").size();
+       // System.out.println(doc.getString("html.body.responseCode"));
+       // System.out.println(size);
         response.then()
                 .assertThat()
                 .statusCode(200);
-                //.body(response.jsonPath().get("products.id"), Matchers.hasSize(43));
+               // .body(("products.id"), Matchers.hasSize(size));
     }
 }
